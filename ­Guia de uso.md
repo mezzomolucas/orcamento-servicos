@@ -1,87 +1,142 @@
+# Guia de Uso - Sistema de Orçamentos de Serviços
 
-1. Como Rodar o Projeto
-Abra o terminal na pasta do projeto e execute os seguintes comandos:
+Este guia mostra como configurar e usar o sistema de orçamentos.
 
-Bash
+## Pré-requisitos
 
-# Ativar o ambiente virtual
-source venv/bin/activate
+Você precisa ter **Python 3** e **pip** instalados.
 
-# Executar a versão simplificada do sistema (recomendado)
+## 1. Clonar o Repositório
+
+```bash
+git clone https://github.com/mezzomolucas/orcamento-servicos.git
+```
+
+## 2. Entrar na Pasta do Projeto
+
+```bash
+cd orcamento-servicos
+```
+
+## 3. Configurar Ambiente Virtual
+
+Crie e ative o ambiente virtual:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate  # Linux/macOS
+# venv\Scripts\activate   # Windows
+```
+
+## 4. Instalar Dependências
+
+```bash
+pip install -r requirements.txt
+```
+
+## 5. Rodar a Aplicação
+
+Inicie o servidor (versão simplificada):
+
+```bash
 python src/main_simples.py
-Pronto! O sistema estará rodando em http://localhost:5000.
+```
 
-2. Como Testar (Usando Postman/Insomnia)
-A forma mais fácil de testar é usando o Postman ou Insomnia.
+O servidor estará em `http://localhost:5000/`.
 
-a) Autenticação
+## 6. Testar com Postman
 
-Primeiro, crie um usuário e faça login para gerar a sessão (cookies).
+Use o Postman para testar as APIs. O Postman gerencia a sessão automaticamente após o login.
 
-Cadastrar Usuário:
-POST http://localhost:5000/api/auth/register
+### Autenticação
 
-JSON
-
+#### Registrar Usuário
+- **Método:** `POST`
+- **URL:** `http://localhost:5000/api/auth/register`
+- **Headers:** `Content-Type: application/json`
+- **Body (JSON):**
+```json
 {
   "nome": "Seu Nome",
-  "email": "seu@email.com",
-  "senha": "123456"
+  "email": "seu.email@example.com",
+  "senha": "sua_senha"
 }
-Fazer Login:
-POST http://localhost:5000/api/auth/login
+```
 
-JSON
-
+#### Fazer Login
+- **Método:** `POST`
+- **URL:** `http://localhost:5000/api/auth/login`
+- **Headers:** `Content-Type: application/json`
+- **Body (JSON):**
+```json
 {
-  "email": "seu@email.com",
-  "senha": "123456"
+  "email": "seu.email@example.com",
+  "senha": "sua_senha"
 }
-Importante: As rotas abaixo só funcionam se você estiver logado!
+```
 
-b) Clientes
+### Clientes
 
-Cadastrar Cliente:
-POST http://localhost:5000/api/clientes/
-
-JSON
-
+#### Cadastrar Cliente
+- **Método:** `POST`
+- **URL:** `http://localhost:5000/api/clientes/`
+- **Headers:** `Content-Type: application/json`
+- **Body (JSON):**
+```json
 {
-  "nome": "Maria Silva",
+  "nome": "Nome do Cliente",
   "telefone": "11987654321",
-  "email": "maria@email.com",
-  "endereco": "Rua das Flores, 123"
+  "email": "cliente@example.com",
+  "endereco": "Rua Exemplo, 123"
 }
-Listar Clientes:
-GET http://localhost:5000/api/clientes/
+```
 
-c) Serviços
+#### Listar Clientes
+- **Método:** `GET`
+- **URL:** `http://localhost:5000/api/clientes/`
 
-Cadastrar Serviço:
-POST http://localhost:5000/api/servicos/
+#### Buscar Cliente por ID
+- **Método:** `GET`
+- **URL:** `http://localhost:5000/api/clientes/1` (substitua `1` pelo ID)
 
-JSON
+### Serviços
 
+#### Cadastrar Serviço
+- **Método:** `POST`
+- **URL:** `http://localhost:5000/api/servicos/`
+- **Headers:** `Content-Type: application/json`
+- **Body (JSON):**
+```json
 {
-  "nome": "Instalação de Ar-Condicionado",
-  "descricao": "Instalação completa do aparelho",
-  "valor": 250.00
+  "nome": "Desenvolvimento Web",
+  "descricao": "Criação de websites e sistemas web.",
+  "preco": 1500.00
 }
-Listar Serviços:
-GET http://localhost:5000/api/servicos/
+```
 
-3. Entendendo os Arquivos
-Para facilitar os estudos, criamos versões simplificadas e comentadas dos arquivos principais. Foque neles:
+#### Listar Serviços
+- **Método:** `GET`
+- **URL:** `http://localhost:5000/api/servicos/`
 
-src/main_simples.py: Arquivo principal para rodar.
+### Orçamentos
 
-src/models/models_simples.py: Define as tabelas do banco de dados (Cliente, Serviço, etc).
+#### Criar Orçamento
+- **Método:** `POST`
+- **URL:** `http://localhost:5000/api/orcamentos/`
+- **Headers:** `Content-Type: application/json`
+- **Body (JSON):**
+```json
+{
+  "cliente_id": 1, 
+  "servicos_ids": [1, 2], 
+  "data_validade": "2025-12-31",
+  "observacoes": "Orçamento inicial."
+}
+```
+*Certifique-se de que `cliente_id` e `servicos_ids` existam.*
 
-src/routes/: Pasta com as rotas (APIs) de cada módulo. Use os arquivos com final _simples.py para entender a lógica.
+## Observações
 
-4. Resolvendo Problemas Comuns
-Erro "401 Unauthorized": Você não está logado ou esqueceu de enviar os cookies da sessão. Faça login primeiro.
+- O banco de dados (`app.db`) é criado na primeira execução de `main_simples.py`.
+- O `index.html` é um placeholder e não faz parte da API backend.
 
-Erro "400 Bad Request": Você enviou algum dado errado ou esqueceu um campo obrigatório no JSON.
-
-Banco de dados deu problema?: Simplesmente apague o arquivo app.db dentro da pasta src/database e rode o sistema novamente. Ele será criado do zero.
