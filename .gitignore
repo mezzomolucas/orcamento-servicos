@@ -1,19 +1,19 @@
-# Ambiente virtual
+#  Ambiente virtual
 venv/
 .env
 
-# Arquivos de cache do Python
+#  Arquivos de cache do Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Banco de dados local
+#  Banco de dados local
 *.db
 
-# Configuração do VSCode
+#  Configuração do VSCode
 .vscode/
 
-# Arquivos temporários
+#  Arquivos temporários
 *.log
 *.tmp
