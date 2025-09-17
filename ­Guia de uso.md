@@ -1,11 +1,5 @@
 # Guia de Uso - Sistema de Orçamentos de Serviços
 
-Este guia mostra como configurar e usar o sistema de orçamentos.
-
-## Pré-requisitos
-
-Você precisa ter **Python 3** e **pip** instalados.
-
 ## 1. Clonar o Repositório
 
 ```bash
@@ -36,17 +30,15 @@ pip install -r requirements.txt
 
 ## 5. Rodar a Aplicação
 
-Inicie o servidor (versão simplificada):
+Inicie o servidor:
 
 ```bash
-python src/main_simples.py
+python src/main.py
 ```
 
 O servidor estará em `http://localhost:5000/`.
 
-## 6. Testar com Postman
-
-Use o Postman para testar as APIs. O Postman gerencia a sessão automaticamente após o login.
+## 6. Testar com Postman.
 
 ### Autenticação
 
