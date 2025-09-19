@@ -132,3 +132,4 @@ O servidor estará em `http://localhost:5000/`.
 - O banco de dados (`app.db`) é criado na primeira execução de `main_simples.py`.
 - O `index.html` é um placeholder e não faz parte da API backend.
 
+OrcamentoServicos2025!
